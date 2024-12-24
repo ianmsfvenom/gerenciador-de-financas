@@ -9,6 +9,7 @@ class VariableExpense extends Model
     protected $fillable = [
         'name',
         'value',
-        'description'
+        'description',
+        'type',
     ];
 }
