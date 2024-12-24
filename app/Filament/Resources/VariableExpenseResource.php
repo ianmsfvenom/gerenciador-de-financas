@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class VariableExpenseResource extends Resource
 {
     protected static ?string $model = VariableExpense::class;
-    protected static ?string $modelLabel = 'despesa variável';
-    protected static ?string $pluralModelLabel = 'despesas variáveis';
+    protected static ?string $modelLabel = 'despesa';
+    protected static ?string $pluralModelLabel = 'despesas';
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
     public static function form(Form $form): Form

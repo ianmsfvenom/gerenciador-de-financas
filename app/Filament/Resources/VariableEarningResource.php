@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class VariableEarningResource extends Resource
 {
     protected static ?string $model = VariableEarning::class;
-    protected static ?string $modelLabel = 'ganho variável';
-    protected static ?string $pluralModelLabel = 'ganhos variáveis';
+    protected static ?string $modelLabel = 'ganho';
+    protected static ?string $pluralModelLabel = 'ganhos';
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
 
     public static function form(Form $form): Form
