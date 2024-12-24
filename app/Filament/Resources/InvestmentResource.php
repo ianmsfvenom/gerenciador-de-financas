@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InvestmentResource\Pages;
 use App\Filament\Resources\InvestmentResource\RelationManagers;
+use App\Filament\Resources\InvestmentResource\Widgets\InvestmentOverview;
 use App\Models\Investment;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -52,7 +53,7 @@ class InvestmentResource extends Resource
                 Tables\Columns\TextColumn::make('value')
                     ->translateLabel()
                     ->label('Valor investido')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
                     ->translateLabel()
@@ -94,6 +95,12 @@ class InvestmentResource extends Resource
             'index' => Pages\ListInvestments::route('/'),
             'create' => Pages\CreateInvestment::route('/create'),
             'edit' => Pages\EditInvestment::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array {
+        return [
+            InvestmentOverview::class,
         ];
     }
 }

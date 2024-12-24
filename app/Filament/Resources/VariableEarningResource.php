@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\EarningType;
 use App\Filament\Resources\VariableEarningResource\Pages;
 use App\Filament\Resources\VariableEarningResource\RelationManagers;
+use App\Filament\Resources\VariableEarningResource\Widgets\VariableEarningOverview;
 use App\Models\VariableEarning;
 use Filament\Forms;
 use Filament\Forms\Components\ToggleButtons;
@@ -59,7 +60,7 @@ class VariableEarningResource extends Resource
                 Tables\Columns\TextColumn::make('value')
                     ->translateLabel()
                     ->label('Valor ganho')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
                     ->translateLabel()
@@ -101,6 +102,12 @@ class VariableEarningResource extends Resource
             'index' => Pages\ListVariableEarnings::route('/'),
             'create' => Pages\CreateVariableEarning::route('/create'),
             'edit' => Pages\EditVariableEarning::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array {
+        return [
+            VariableEarningOverview::class,
         ];
     }
 }

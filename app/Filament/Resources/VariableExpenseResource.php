@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\ExpenseType;
 use App\Filament\Resources\VariableExpenseResource\Pages;
 use App\Filament\Resources\VariableExpenseResource\RelationManagers;
+use App\Filament\Resources\VariableExpenseResource\Widgets\VariableExpenseOverview;
 use App\Models\VariableExpense;
 use Filament\Forms;
 use Filament\Forms\Components\ToggleButtons;
@@ -58,8 +59,8 @@ class VariableExpenseResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('value')
                     ->translateLabel()
-                    ->label('Descrição')
-                    ->numeric()
+                    ->label('Valor gasto')
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
                     ->translateLabel()
@@ -101,6 +102,12 @@ class VariableExpenseResource extends Resource
             'index' => Pages\ListVariableExpenses::route('/'),
             'create' => Pages\CreateVariableExpense::route('/create'),
             'edit' => Pages\EditVariableExpense::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array {
+        return [
+            VariableExpenseOverview::class,
         ];
     }
 }

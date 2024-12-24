@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\EarningType;
 use App\Filament\Resources\FixedEarningResource\Pages;
 use App\Filament\Resources\FixedEarningResource\RelationManagers;
+use App\Filament\Resources\FixedEarningResource\Widgets\FixedEarningOverview;
 use App\Models\FixedEarning;
 use Filament\Forms;
 use Filament\Forms\Components\ToggleButtons;
@@ -58,7 +59,7 @@ class FixedEarningResource extends Resource
                 Tables\Columns\TextColumn::make('value')
                     ->translateLabel()
                     ->label('Valor ganho')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
                     ->translateLabel()
@@ -100,6 +101,13 @@ class FixedEarningResource extends Resource
             'index' => Pages\ListFixedEarnings::route('/'),
             'create' => Pages\CreateFixedEarning::route('/create'),
             'edit' => Pages\EditFixedEarning::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            FixedEarningOverview::class,
         ];
     }
 }

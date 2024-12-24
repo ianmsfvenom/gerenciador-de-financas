@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\ExpenseType;
 use App\Filament\Resources\FixedExpenseResource\Pages;
 use App\Filament\Resources\FixedExpenseResource\RelationManagers;
+use App\Filament\Resources\FixedExpenseResource\Widgets\FixedExpenseOverview;
 use App\Models\FixedExpense;
 use Filament\Forms;
 use Filament\Forms\Components\ToggleButtons;
@@ -59,7 +60,7 @@ class FixedExpenseResource extends Resource
                 Tables\Columns\TextColumn::make('value')
                     ->translateLabel()
                     ->label('Valor da despesa')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => 'R$ ' . number_format($state, 2, ',', '.'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
                     ->translateLabel()
@@ -101,6 +102,13 @@ class FixedExpenseResource extends Resource
             'index' => Pages\ListFixedExpenses::route('/'),
             'create' => Pages\CreateFixedExpense::route('/create'),
             'edit' => Pages\EditFixedExpense::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            FixedExpenseOverview::class
         ];
     }
 }

@@ -10,7 +10,7 @@ enum ExpenseType: string implements HasColor, HasIcon, HasLabel
     case Bill = 'Conta';
     case Food = 'Alimentação';
     case Health = 'Saúde e bem-estar';
-    case Transport = 'Transport';
+    case Transport = 'Transporte';
     case Others = 'Outros';
     case Invoice = 'Fatura';
 
