@@ -2,8 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\FixedEarning;
-use App\Models\FixedExpense;
 use App\Models\VariableEarning;
 use App\Models\VariableExpense;
 use Filament\Widgets\ChartWidget;
@@ -19,26 +17,24 @@ class ExpensesChart extends ChartWidget
 
     protected function getData(): array
     {
-        $fixed_exp = FixedExpense::query()->sum('value');
-        $fixed_ear = FixedEarning::query()->sum('value');
         $exp_arr = [];
         $ear_arr = [];
         
         for($i = 1; $i <= 12; $i++) {
-            $exp_arr[] = $fixed_exp + VariableExpense::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->sum('value');
-            $ear_arr[] = $fixed_ear + VariableEarning::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->sum('value');
+            $exp_arr[] = VariableExpense::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->sum('value');
+            $ear_arr[] = VariableEarning::whereMonth('created_at', $i)->whereYear('created_at', date('Y'))->sum('value');
         }
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Gastos por mês',
+                    'label' => 'Gastos ao mês',
                     'data' => $exp_arr,
                     'fill' => 'start',
                     'borderColor' => '#f87171',
                 ],
                 [
-                    'label' => 'Ganhos por mês',
+                    'label' => 'Ganhos ao mês',
                     'data' => $ear_arr,
                     'fill' => 'start',
                     'borderColor' => '#3b82f6',

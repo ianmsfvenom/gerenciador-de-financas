@@ -2,8 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\FixedEarning;
-use App\Models\FixedExpense;
 use App\Models\VariableEarning;
 use App\Models\VariableExpense;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -18,14 +16,14 @@ class EarnExpenseOverview extends BaseWidget
 
     protected function getStats(): array
     {
-        $total_liquid_recept = (FixedEarning::query()->sum('value') + VariableEarning::query()->sum('value')) - 
-            (FixedExpense::query()->sum('value') + VariableExpense::query()->sum('value'));
+        $total_liquid_recept = (VariableEarning::query()->sum('value')) - 
+            (VariableExpense::query()->sum('value'));
 
-        $annual_liquid_recept = (FixedEarning::where('created_at', '>=', now()->startOfYear())->sum('value') + VariableEarning::where('created_at', '>=', now()->startOfYear())->sum('value')) - 
-            (FixedExpense::where('created_at', '>=', now()->startOfYear())->sum('value') + VariableExpense::where('created_at', '>=', now()->startOfYear())->sum('value'));
+        $annual_liquid_recept = (VariableEarning::where('created_at', '>=', now()->startOfYear())->sum('value')) - 
+            (VariableExpense::where('created_at', '>=', now()->startOfYear())->sum('value'));
 
-        $monthly_liquid_recept = (FixedEarning::where('created_at', '>=', now()->startOfMonth())->sum('value') + VariableEarning::where('created_at', '>=', now()->startOfMonth())->sum('value')) - 
-            (FixedExpense::where('created_at', '>=', now()->startOfMonth())->sum('value') + VariableExpense::where('created_at', '>=', now()->startOfMonth())->sum('value'));
+        $monthly_liquid_recept = (VariableEarning::where('created_at', '>=', now()->startOfMonth())->sum('value')) - 
+            (VariableExpense::where('created_at', '>=', now()->startOfMonth())->sum('value'));
         
         
         return [
